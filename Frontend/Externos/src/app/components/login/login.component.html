@@ -1,0 +1,11 @@
+<div class="ui-inputgroup">
+  <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+  <input type="text" pInputText placeholder="Usuario" [(ngModel)]="usuario" />
+</div>
+
+<div class="ui-inputgroup">
+  <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
+  <input type="password" pInputText placeholder="Contraseña" [(ngModel)]="contrasena" />
+</div>
+
+<p-button label="Ingresar" (click)="login()"></p-button>

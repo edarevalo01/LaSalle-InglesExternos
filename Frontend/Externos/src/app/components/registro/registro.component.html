@@ -1,0 +1,160 @@
+<div class="complete">
+  <div class="ui-fluid">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Primer Nombre:</span>
+        </div>
+        <div class="ui-g-7"><input type="text" pInputText [(ngModel)]="primerNombre" required /></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Segundo Nombre:</span>
+        </div>
+        <div class="ui-g-7"><input type="text" pInputText [(ngModel)]="segundoNombre" /></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Primer Apellido:</span>
+        </div>
+        <div class="ui-g-7"><input type="text" pInputText [(ngModel)]="primerApellido" /></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Segundo Apellido:</span>
+        </div>
+        <div class="ui-g-7"><input type="text" pInputText [(ngModel)]="segundoApellido" /></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Tipo Documento:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="tiposDocumento" placeholder="Tipo Documento" [(ngModel)]="tipoDocSelected" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Número Documento:</span>
+        </div>
+        <div class="ui-g-7"><input type="text" pInputText [(ngModel)]="numeroDocumento" /></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Departamento Documento:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="departamentos" placeholder="Departamento Documento" [(ngModel)]="depDocSelected" optionLabel="nombre" [showClear]="true" filter="true" (click)="asignarDepartamento('doc')"></p-dropdown></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Ciudad Documento:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="ciudadesDoc" placeholder="Ciudad Documento" [(ngModel)]="ciuDocSelected" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Departamento de Nacimiento:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="departamentos" placeholder="Departamento Nacimiento" [(ngModel)]="depNacSelected" optionLabel="nombre" [showClear]="true" filter="true" (click)="asignarDepartamento('nac')"></p-dropdown></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Ciudad de Nacimiento:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="ciudadesNac" placeholder="Ciudad Nacimiento" [(ngModel)]="ciuNacSelected" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Fecha de Nacimiento:</span>
+        </div>
+        <div class="ui-g-7"><p-calendar [(ngModel)]="fechaNacimiento" [monthNavigator]="true" [yearNavigator]="true" yearRange="1919:2030"></p-calendar></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Estado Civil:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="tipoEstadoCivil" placeholder="Estado Civil" [(ngModel)]="tipoEstCivilSelected" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Departamento de Residencia:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="departamentos" placeholder="Departamento Residencia" [(ngModel)]="depResSelected" optionLabel="nombre" [showClear]="true" filter="true" (click)="asignarDepartamento('res')"></p-dropdown></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Ciudad de Residencia:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="ciudadesRes" placeholder="Ciudad Residencia" [(ngModel)]="ciuResSelected" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Dirección de Residencia:</span>
+        </div>
+        <div class="ui-g-7"><input type="text" pInputText [(ngModel)]="direccion" /></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Barrio de Residencia:</span>
+        </div>
+        <div class="ui-g-7"><input type="text" pInputText [(ngModel)]="barrio" /></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Teléfono de Residencia:</span>
+        </div>
+        <div class="ui-g-7"><input type="text" pInputText [(ngModel)]="telCasa" /></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Teléfono Celular:</span>
+        </div>
+        <div class="ui-g-7"><input type="text" pInputText [(ngModel)]="telCelular" /></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Email:</span>
+        </div>
+        <div class="ui-g-7"><input type="text" pInputText [(ngModel)]="email" /></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Estrato:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="estrato" placeholder="Estrato" [(ngModel)]="estratoSelected" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>Género:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="sexo" placeholder="Género" [(ngModel)]="sexoSelected" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
+      </div>
+
+      <div class="ui-g-12 ui-md-6">
+        <div class="ui-g-4">
+          <span>EPS:</span>
+        </div>
+        <div class="ui-g-7"><p-dropdown [options]="eps" placeholder="EPS" [(ngModel)]="epsSelected" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
+      </div>
+    </div>
+  </div>
+  <p-button label="Registrarse" (click)="registrarse()"></p-button>
+</div>
