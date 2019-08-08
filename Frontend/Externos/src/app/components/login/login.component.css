@@ -1,0 +1,26 @@
+.complete {
+  width: 98%;
+  margin: auto;
+  font-family: arial;
+}
+
+.titulo-login {
+  text-align: center;
+}
+
+.inputs {
+  margin: auto;
+}
+
+#icons {
+  color: rgb(124, 124, 124);
+  font-size: 5px;
+}
+
+#div-btn-login {
+  margin-top: 2%;
+}
+
+#btn-login {
+  width: 100%;
+}

@@ -1,11 +1,31 @@
-<div class="ui-inputgroup">
-  <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
-  <input type="text" pInputText placeholder="Usuario" [(ngModel)]="usuario" />
+<div class="complete">
+  <div class="ui-fluid">
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h2 class="titulo-login">Iniciar Sesión</h2>
+      </div>
+      <div class="ui-g-12 ui-md-12">
+        <div class="ui-g-12 ui-md-4 ui-md-offset-4">
+          <div class="ui-inputgroup inputs">
+            <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input type="text" pInputText placeholder="Usuario" [(ngModel)]="usuario" />
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12">
+        <div class="ui-g-12 ui-md-4 ui-md-offset-4">
+          <div class="ui-inputgroup inputs">
+            <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
+            <input type="password" pInputText placeholder="Contraseña" [(ngModel)]="contrasena" [type]="hide ? 'password' : 'text'" />
+            <button id="icons" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-4 ui-md-offset-4" id="div-btn-login">
+        <p-button label="Ingresar" type="button" (click)="login()" id="btn-login"></p-button>
+      </div>
+    </div>
+  </div>
 </div>
-
-<div class="ui-inputgroup">
-  <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
-  <input type="password" pInputText placeholder="Contraseña" [(ngModel)]="contrasena" />
-</div>
-
-<p-button label="Ingresar" (click)="login()"></p-button>

@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   usuario: string;
   contrasena: string;
   respuesta: Respuesta;
+  hide = true;
 
   constructor(private service: ServiciosService, private cookie: CookieService) {}
 

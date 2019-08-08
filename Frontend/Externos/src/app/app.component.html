@@ -1,5 +1,32 @@
-<div id="total">
-  <p-button label="Registro" (click)="registro()"></p-button>
-  <p-button label="Login" (click)="login()"></p-button>
-  <router-outlet></router-outlet>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <img src="http://pruebasia.lasalle.edu.co/images/LOGOSALLE.gif" class="img-responsive" alt="Universidad de La Salle" style="width: 177px; height: 80px;" />
+    </div>
+    <div class="col-md-5">
+      <div class="tituloRegistro">
+        <h3>CURSOS DE INGLÉS ESTUDIANTES EXTERNOS</h3>
+        <h5>&nbsp;Universidad de La Salle - Oficina de Admisiones y Registro</h5>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <p-button label="Registro" (click)="registro()" id="btn"></p-button>
+          <p-button label="Login" (click)="login()" id="btn"></p-button>
+        </div>
+        <div class="panel-body">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12" id="derechos">
+      <span>Cra 5 No. 59A-44 - Tel: (571)348 8000 | Cra 2 No. 10-70 - Tel. (571)353 5360 | Cra 7 No. 172-85 - Tel: (571)677 2699 Bogotá, Colombia</span>
+    </div>
+    <div class="col-md-12 finderechos" id="derechos">
+      <span>&copy; Todos los derechos reservados. Contenido propiedad exclusiva de la Universidad de La Salle</span>
+    </div>
+  </div>
 </div>

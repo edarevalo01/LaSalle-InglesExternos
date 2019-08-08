@@ -1,5 +1,16 @@
 .complete {
-  width: 90%;
+  width: 98%;
   margin: auto;
   font-family: arial;
+}
+.titulo-registro {
+  text-align: center;
+}
+
+#div-btn-registro {
+  margin-top: 2%;
+}
+
+#btn-registro {
+  width: 100%;
 }
