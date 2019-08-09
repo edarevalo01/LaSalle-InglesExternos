@@ -3,11 +3,16 @@ import { Divipola } from "src/app/model/Divipola";
 import { ServiciosService } from "src/app/services/servicios.service";
 import { Tipo } from "src/app/model/Tipo";
 import { Eps } from "src/app/model/Eps";
+import { MessageService } from "primeng/api";
+import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Respuesta } from "src/app/model/Respuesta";
 
 @Component({
   selector: "app-registro",
   templateUrl: "./registro.component.html",
-  styleUrls: ["./registro.component.css"]
+  styleUrls: ["./registro.component.css"],
+  providers: [MessageService]
 })
 export class RegistroComponent implements OnInit {
   tiposDocumento: Tipo[];
@@ -20,30 +25,10 @@ export class RegistroComponent implements OnInit {
   sexo: Tipo[];
   eps: Eps[];
 
-  primerNombre: string;
-  segundoNombre: string;
-  primerApellido: string;
-  segundoApellido: string;
-  tipoDocSelected: Tipo = new Tipo();
-  numeroDocumento: string;
-  depDocSelected: Divipola = new Divipola();
-  ciuDocSelected: Divipola = new Divipola();
-  fechaNacimiento: Date;
-  depNacSelected: Divipola = new Divipola();
-  ciuNacSelected: Divipola = new Divipola();
-  tipoEstCivilSelected: Tipo = new Tipo();
-  direccion: string;
-  depResSelected: Divipola = new Divipola();
-  ciuResSelected: Divipola = new Divipola();
-  barrio: string;
-  telCasa: string;
-  telCelular: string;
-  email: string;
-  estratoSelected: Tipo = new Tipo();
-  sexoSelected: Tipo = new Tipo();
-  epsSelected: Eps = new Eps();
+  userform: FormGroup;
+  respuesta: Respuesta;
 
-  constructor(private service: ServiciosService) {
+  constructor(private service: ServiciosService, private router: Router, private fb: FormBuilder) {
     this.getDepartamentos();
     this.getEps();
     this.fillTipoDocumento();
@@ -52,21 +37,57 @@ export class RegistroComponent implements OnInit {
     this.fillSexo();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userform = this.fb.group({
+      primerNombre: new FormControl("", Validators.required),
+      segundoNombre: new FormControl("", Validators.required),
+      primerApellido: new FormControl("", Validators.required),
+      segundoApellido: new FormControl("", Validators.required),
+      tipoDocSelected: new FormControl("", Validators.required),
+      numeroDocumento: new FormControl("", Validators.required),
+      depDocSelected: new FormControl("", Validators.required),
+      ciuDocSelected: new FormControl("", Validators.required),
+      fechaNacimiento: new FormControl("", Validators.required),
+      depNacSelected: new FormControl("", Validators.required),
+      ciuNacSelected: new FormControl("", Validators.required),
+      tipoEstCivilSelected: new FormControl("", Validators.required),
+      direccion: new FormControl("", Validators.required),
+      depResSelected: new FormControl("", Validators.required),
+      ciuResSelected: new FormControl("", Validators.required),
+      barrio: new FormControl("", Validators.required),
+      telCasa: new FormControl("", Validators.required),
+      telCelular: new FormControl("", Validators.required),
+      email: new FormControl("", Validators.required),
+      estratoSelected: new FormControl("", Validators.required),
+      sexoSelected: new FormControl("", Validators.required),
+      epsSelected: new FormControl("", Validators.required)
+    });
+  }
 
   registrarse() {
     let registro = this.makeJson();
-    this.service.registroUsuario(registro).subscribe(
-      msj => {
-        console.log(msj);
-      },
-      error => {
-        console.error("ERROR al registrar: ", error);
-      },
-      () => {
-        console.log("registro terminado");
-      }
-    );
+    if (!registro) {
+      this.userform.invalid;
+      return;
+    } else {
+      this.service.registroUsuario(registro).subscribe(
+        msj => {
+          this.respuesta = msj;
+          console.log(msj);
+        },
+        error => {
+          console.error("ERROR al registrar: ", error);
+        },
+        () => {
+          console.log(this.respuesta);
+          if (this.respuesta.status === "ok") {
+            //Enviar modal para que verifique el registro y redirija
+            console.log("registro terminado");
+            this.router.navigateByUrl("login");
+          }
+        }
+      );
+    }
   }
 
   getDepartamentos() {
@@ -120,11 +141,11 @@ export class RegistroComponent implements OnInit {
 
   asignarDepartamento(tipoCiudad: string) {
     if (tipoCiudad === "doc") {
-      this.getCiudades(this.depDocSelected, tipoCiudad);
+      this.getCiudades(this.userform.value.depDocSelected, tipoCiudad);
     } else if (tipoCiudad === "nac") {
-      this.getCiudades(this.depNacSelected, tipoCiudad);
+      this.getCiudades(this.userform.value.depNacSelected, tipoCiudad);
     } else if (tipoCiudad === "res") {
-      this.getCiudades(this.depResSelected, tipoCiudad);
+      this.getCiudades(this.userform.value.depResSelected, tipoCiudad);
     }
   }
 
@@ -145,31 +166,35 @@ export class RegistroComponent implements OnInit {
   }
 
   makeJson(): string {
-    const jsonReturn = {
-      primer_nombre: encodeURI(this.primerNombre),
-      segundo_nombre: encodeURI(this.segundoNombre),
-      primer_apellido: encodeURI(this.primerApellido),
-      segundo_apellido: encodeURI(this.segundoApellido),
-      tipo_documento: encodeURI(this.tipoDocSelected.codigo),
-      numero_documento: encodeURI(this.numeroDocumento),
-      departamento_documento: encodeURI(this.depDocSelected.codigo),
-      ciudad_documento: encodeURI(this.ciuDocSelected.codigo),
-      fecha_nacimiento: this.fechaNacimiento.getDay() + "/" + this.fechaNacimiento.getMonth() + "/" + this.fechaNacimiento.getFullYear(),
-      departamento_nacimiento: encodeURI(this.depNacSelected.codigo),
-      ciudad_nacimiento: encodeURI(this.ciuNacSelected.codigo),
-      estado_civil: encodeURI(this.tipoEstCivilSelected.codigo),
-      direccion_residencia: encodeURIComponent(this.direccion),
-      departamento_residencia: encodeURI(this.depResSelected.codigo),
-      ciudad_residencia: encodeURI(this.ciuResSelected.codigo),
-      barrio: encodeURI(this.barrio),
-      telefono_casa: encodeURI(this.telCasa),
-      telefono_celular: encodeURI(this.telCelular),
-      email: encodeURI(this.email),
-      estrato: encodeURI(this.estratoSelected.codigo),
-      sexo: encodeURI(this.sexoSelected.codigo),
-      eps: encodeURI(this.epsSelected.codigo),
-      ciclo: "01"
-    };
-    return JSON.stringify(jsonReturn);
+    try {
+      const jsonReturn = {
+        primer_nombre: this.userform.value.primerNombre,
+        segundo_nombre: this.userform.value.segundoNombre,
+        primer_apellido: this.userform.value.primerApellido,
+        segundo_apellido: this.userform.value.segundoApellido,
+        tipo_documento: encodeURI(this.userform.value.tipoDocSelected.codigo),
+        numero_documento: encodeURI(this.userform.value.numeroDocumento),
+        departamento_documento: this.userform.value.depDocSelected.codigo,
+        ciudad_documento: this.userform.value.ciuDocSelected.codigo,
+        fecha_nacimiento: this.userform.value.fechaNacimiento.getDay() + "/" + this.userform.value.fechaNacimiento.getMonth() + "/" + this.userform.value.fechaNacimiento.getFullYear(),
+        departamento_nacimiento: this.userform.value.depNacSelected.codigo,
+        ciudad_nacimiento: this.userform.value.ciuNacSelected.codigo,
+        estado_civil: encodeURI(this.userform.value.tipoEstCivilSelected.codigo),
+        direccion_residencia: encodeURIComponent(this.userform.value.direccion),
+        departamento_residencia: this.userform.value.depResSelected.codigo,
+        ciudad_residencia: this.userform.value.ciuResSelected.codigo,
+        barrio: this.userform.value.barrio,
+        telefono_casa: encodeURI(this.userform.value.telCasa),
+        telefono_celular: encodeURI(this.userform.value.telCelular),
+        email: this.userform.value.email,
+        estrato: encodeURI(this.userform.value.estratoSelected.codigo),
+        sexo: encodeURI(this.userform.value.sexoSelected.codigo),
+        eps: encodeURI(this.userform.value.epsSelected.codigo),
+        ciclo: "01"
+      };
+      return JSON.stringify(jsonReturn);
+    } catch (error) {
+      return null;
+    }
   }
 }

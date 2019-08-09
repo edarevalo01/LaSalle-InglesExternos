@@ -1,6 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule } from "@angular/common/http";
 import { CookieService } from "ngx-cookie-service";
@@ -20,21 +20,7 @@ import { CalendarModule } from "primeng/calendar";
 
 @NgModule({
   declarations: [AppComponent, RegistroComponent, LoginComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    ButtonModule,
-    DropdownModule,
-    HttpClientModule,
-    InputTextModule,
-    CalendarModule,
-    NgbModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatIconModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ButtonModule, DropdownModule, HttpClientModule, InputTextModule, CalendarModule, NgbModule, BrowserAnimationsModule, MatFormFieldModule, MatIconModule, ReactiveFormsModule],
   providers: [CookieService],
   bootstrap: [AppComponent]
 })

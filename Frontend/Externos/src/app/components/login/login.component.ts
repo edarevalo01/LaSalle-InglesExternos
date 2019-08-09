@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { CookieService } from "ngx-cookie-service";
 import { Respuesta } from "src/app/model/Respuesta";
 import { ServiciosService } from "src/app/services/servicios.service";
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
   selector: "app-login",
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.service.loginUsuario(this.usuario, this.contrasena).subscribe(
       respuestaObs => {
+        console.log(respuestaObs);
         this.respuesta = respuestaObs;
       },
       error => {
@@ -29,7 +30,10 @@ export class LoginComponent implements OnInit {
       () => {
         console.log("Ingreso exitoso.");
         console.log(this.respuesta);
-        this.cookie.set("cookie", this.respuesta.mensaje);
+        if (this.respuesta.status === "ok") {
+          this.cookie.set("wUFAnew4", this.respuesta.mensaje, 3600, "/", ".lasalle.edu.co");
+          document.location.href = "http://zeus.lasalle.edu.co/oar/clus/?v=1.3";
+        }
       }
     );
   }

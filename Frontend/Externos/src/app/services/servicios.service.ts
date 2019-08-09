@@ -12,10 +12,10 @@ import { Eps } from "../model/Eps";
 export class ServiciosService {
   constructor(private http: HttpClient) {}
 
-  registroUsuario(datos: string) {
+  registroUsuario(datos: string): Observable<Respuesta> {
     console.log(datos);
     const param = new HttpParams().set("datos", datos);
-    return this.http.post(environment.urlRegistro, param);
+    return this.http.get<Respuesta>(environment.urlRegistro, { params: param });
   }
 
   loginUsuario(usuario: string, contrasena: string): Observable<Respuesta> {

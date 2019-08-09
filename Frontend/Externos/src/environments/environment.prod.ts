@@ -1,8 +1,8 @@
 export const environment = {
   production: false,
-  urlRegistro: "http://localhost:8080/crearUsuario",
-  urlLogin: "http://localhost:8080/loginUsuario",
-  urlGetDepartamentos: "http://localhost:8080/getDepartamentos", //idPais
-  urlGetCiudades: "http://localhost:8080/getCiudades", //codigoDepartamento
-  urlGetEps: "http://localhost:8080/getEps"
+  urlRegistro: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/crearUsuario",
+  urlLogin: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/loginUsuario",
+  urlGetDepartamentos: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/getDepartamentos", //idPais
+  urlGetCiudades: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/getCiudades", //codigoDepartamento
+  urlGetEps: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/getEps"
 };

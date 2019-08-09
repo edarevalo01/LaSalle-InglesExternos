@@ -1,6 +1,6 @@
 <div class="complete">
   <div class="ui-fluid">
-    <div class="ui-g">
+    <div class="ui-g" [formGroup]="userform">
       <div class="ui-g-12">
         <h2 class="titulo-registro">Registro</h2>
       </div>
@@ -8,42 +8,42 @@
         <div class="ui-g-4">
           <span>Primer Nombre:</span>
         </div>
-        <div class="ui-g-8"><input type="text" pInputText [(ngModel)]="primerNombre" required /></div>
+        <div class="ui-g-8"><input type="text" formControlName="primerNombre" pInputText required /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Segundo Nombre:</span>
         </div>
-        <div class="ui-g-8"><input type="text" pInputText [(ngModel)]="segundoNombre" /></div>
+        <div class="ui-g-8"><input type="text" formControlName="segundoNombre" pInputText /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Primer Apellido:</span>
         </div>
-        <div class="ui-g-8"><input type="text" pInputText [(ngModel)]="primerApellido" /></div>
+        <div class="ui-g-8"><input type="text" formControlName="primerApellido" pInputText /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Segundo Apellido:</span>
         </div>
-        <div class="ui-g-8"><input type="text" pInputText [(ngModel)]="segundoApellido" /></div>
+        <div class="ui-g-8"><input type="text" formControlName="segundoApellido" pInputText /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Tipo Documento:</span>
         </div>
-        <div class="ui-g-8"><p-dropdown [options]="tiposDocumento" placeholder="Tipo Documento" [(ngModel)]="tipoDocSelected" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
+        <div class="ui-g-8"><p-dropdown formControlName="tipoDocSelected" [options]="tiposDocumento" placeholder="Tipo Documento" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Número Documento:</span>
         </div>
-        <div class="ui-g-8"><input type="text" pInputText [(ngModel)]="numeroDocumento" /></div>
+        <div class="ui-g-8"><input type="text" formControlName="numeroDocumento" pInputText /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
@@ -51,7 +51,7 @@
           <span>Departamento Documento:</span>
         </div>
         <div class="ui-g-8">
-          <p-dropdown [options]="departamentos" placeholder="Departamento Documento" [(ngModel)]="depDocSelected" optionLabel="nombre" [showClear]="true" filter="true" (click)="asignarDepartamento('doc')"></p-dropdown>
+          <p-dropdown formControlName="depDocSelected" [options]="departamentos" placeholder="Departamento Documento" optionLabel="nombre" [showClear]="true" filter="true" (click)="asignarDepartamento('doc')"></p-dropdown>
         </div>
       </div>
 
@@ -59,7 +59,7 @@
         <div class="ui-g-4">
           <span>Ciudad Documento:</span>
         </div>
-        <div class="ui-g-8"><p-dropdown [options]="ciudadesDoc" placeholder="Ciudad Documento" [(ngModel)]="ciuDocSelected" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
+        <div class="ui-g-8"><p-dropdown formControlName="ciuDocSelected" [options]="ciudadesDoc" placeholder="Ciudad Documento" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
@@ -67,7 +67,7 @@
           <span>Departamento de Nacimiento:</span>
         </div>
         <div class="ui-g-8">
-          <p-dropdown [options]="departamentos" placeholder="Departamento Nacimiento" [(ngModel)]="depNacSelected" optionLabel="nombre" [showClear]="true" filter="true" (click)="asignarDepartamento('nac')"></p-dropdown>
+          <p-dropdown formControlName="depNacSelected" [options]="departamentos" placeholder="Departamento Nacimiento" optionLabel="nombre" [showClear]="true" filter="true" (click)="asignarDepartamento('nac')"></p-dropdown>
         </div>
       </div>
 
@@ -75,21 +75,21 @@
         <div class="ui-g-4">
           <span>Ciudad de Nacimiento:</span>
         </div>
-        <div class="ui-g-8"><p-dropdown [options]="ciudadesNac" placeholder="Ciudad Nacimiento" [(ngModel)]="ciuNacSelected" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
+        <div class="ui-g-8"><p-dropdown formControlName="ciuNacSelected" [options]="ciudadesNac" placeholder="Ciudad Nacimiento" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Fecha de Nacimiento:</span>
         </div>
-        <div class="ui-g-8"><p-calendar [(ngModel)]="fechaNacimiento" [monthNavigator]="true" [yearNavigator]="true" yearRange="1919:2030"></p-calendar></div>
+        <div class="ui-g-8"><p-calendar formControlName="fechaNacimiento" [monthNavigator]="true" [yearNavigator]="true" yearRange="1919:2030"></p-calendar></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Estado Civil:</span>
         </div>
-        <div class="ui-g-8"><p-dropdown [options]="tipoEstadoCivil" placeholder="Estado Civil" [(ngModel)]="tipoEstCivilSelected" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
+        <div class="ui-g-8"><p-dropdown formControlName="tipoEstCivilSelected" [options]="tipoEstadoCivil" placeholder="Estado Civil" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
@@ -97,7 +97,7 @@
           <span>Departamento de Residencia:</span>
         </div>
         <div class="ui-g-8">
-          <p-dropdown [options]="departamentos" placeholder="Departamento Residencia" [(ngModel)]="depResSelected" optionLabel="nombre" [showClear]="true" filter="true" (click)="asignarDepartamento('res')"></p-dropdown>
+          <p-dropdown formControlName="depResSelected" [options]="departamentos" placeholder="Departamento Residencia" optionLabel="nombre" [showClear]="true" filter="true" (click)="asignarDepartamento('res')"></p-dropdown>
         </div>
       </div>
 
@@ -105,66 +105,66 @@
         <div class="ui-g-4">
           <span>Ciudad de Residencia:</span>
         </div>
-        <div class="ui-g-8"><p-dropdown [options]="ciudadesRes" placeholder="Ciudad Residencia" [(ngModel)]="ciuResSelected" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
+        <div class="ui-g-8"><p-dropdown formControlName="ciuResSelected" [options]="ciudadesRes" placeholder="Ciudad Residencia" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Dirección de Residencia:</span>
         </div>
-        <div class="ui-g-8"><input type="text" pInputText [(ngModel)]="direccion" /></div>
+        <div class="ui-g-8"><input type="text" formControlName="direccion" pInputText /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Barrio de Residencia:</span>
         </div>
-        <div class="ui-g-8"><input type="text" pInputText [(ngModel)]="barrio" /></div>
+        <div class="ui-g-8"><input type="text" formControlName="barrio" pInputText /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Teléfono de Residencia:</span>
         </div>
-        <div class="ui-g-8"><input type="text" pInputText [(ngModel)]="telCasa" /></div>
+        <div class="ui-g-8"><input type="text" formControlName="telCasa" pInputText /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Teléfono Celular:</span>
         </div>
-        <div class="ui-g-8"><input type="text" pInputText [(ngModel)]="telCelular" /></div>
+        <div class="ui-g-8"><input type="text" formControlName="telCelular" pInputText /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Email:</span>
         </div>
-        <div class="ui-g-8"><input type="text" pInputText [(ngModel)]="email" /></div>
+        <div class="ui-g-8"><input type="email" formControlName="email" pInputText /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Estrato:</span>
         </div>
-        <div class="ui-g-8"><p-dropdown [options]="estrato" placeholder="Estrato" [(ngModel)]="estratoSelected" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
+        <div class="ui-g-8"><p-dropdown formControlName="estratoSelected" [options]="estrato" placeholder="Estrato" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>Género:</span>
         </div>
-        <div class="ui-g-8"><p-dropdown [options]="sexo" placeholder="Género" [(ngModel)]="sexoSelected" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
+        <div class="ui-g-8"><p-dropdown formControlName="sexoSelected" [options]="sexo" placeholder="Género" optionLabel="valor" [showClear]="true" filter="true"></p-dropdown></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
         <div class="ui-g-4">
           <span>EPS:</span>
         </div>
-        <div class="ui-g-8"><p-dropdown [options]="eps" placeholder="EPS" [(ngModel)]="epsSelected" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
+        <div class="ui-g-8"><p-dropdown formControlName="epsSelected" [options]="eps" placeholder="EPS" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
       </div>
       <div class="ui-g-12 ui-md-4 ui-md-offset-4" id="div-btn-registro">
-        <p-button label="Registrarse" type="button" (click)="registrarse()" id="btn-registro"></p-button>
+        <p-button [disabled]="!userform.valid" label="Registrarse" type="button" (click)="registrarse()" id="btn-registro"></p-button>
       </div>
     </div>
   </div>
