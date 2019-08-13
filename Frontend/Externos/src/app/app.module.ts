@@ -17,10 +17,13 @@ import { ButtonModule } from "primeng/button";
 import { DropdownModule } from "primeng/dropdown";
 import { InputTextModule } from "primeng/inputtext";
 import { CalendarModule } from "primeng/calendar";
+import { CheckboxModule } from "primeng/checkbox";
+import { DialogModule } from "primeng/dialog";
+import { ProgressSpinnerModule } from "primeng/progressspinner";
 
 @NgModule({
   declarations: [AppComponent, RegistroComponent, LoginComponent],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ButtonModule, DropdownModule, HttpClientModule, InputTextModule, CalendarModule, NgbModule, BrowserAnimationsModule, MatFormFieldModule, MatIconModule, ReactiveFormsModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ButtonModule, DropdownModule, HttpClientModule, InputTextModule, CalendarModule, NgbModule, BrowserAnimationsModule, MatFormFieldModule, MatIconModule, ReactiveFormsModule, CheckboxModule, DialogModule, ProgressSpinnerModule],
   providers: [CookieService],
   bootstrap: [AppComponent]
 })

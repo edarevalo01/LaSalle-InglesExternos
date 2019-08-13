@@ -163,9 +163,29 @@
         </div>
         <div class="ui-g-8"><p-dropdown formControlName="epsSelected" [options]="eps" placeholder="EPS" optionLabel="nombre" [showClear]="true" filter="true"></p-dropdown></div>
       </div>
+
+      <div class="ui-g-12 ui-md-12">
+        <p-checkbox [formControl]="userform.controls['hdata']" label="{{ terminos }}"></p-checkbox>
+      </div>
       <div class="ui-g-12 ui-md-4 ui-md-offset-4" id="div-btn-registro">
         <p-button [disabled]="!userform.valid" label="Registrarse" type="button" (click)="registrarse()" id="btn-registro"></p-button>
       </div>
     </div>
+  </div>
+</div>
+
+<p-dialog [(visible)]="display" [closable]="false" [blockScroll]="true" [modal]="true" [responsive]="true" [style]="{ width: '350px', minWidth: '200px' }" [minY]="70" [baseZIndex]="10000">
+  <p>
+    <i class="pi pi-check"></i>
+    {{ verificacionRegistro }}
+  </p>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="goLogin()" label="Continuar"></button>
+  </p-footer>
+</p-dialog>
+
+<div class="ui-g-12 ui-md-12" id="progress" *ngIf="progress">
+  <div id="spinner">
+    <p-progressSpinner [style]="{ width: '150px', height: '150px' }"></p-progressSpinner>
   </div>
 </div>

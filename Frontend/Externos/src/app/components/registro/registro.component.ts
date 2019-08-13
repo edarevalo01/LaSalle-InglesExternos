@@ -24,9 +24,14 @@ export class RegistroComponent implements OnInit {
   estrato: Tipo[];
   sexo: Tipo[];
   eps: Eps[];
+  display: boolean = false;
+  progress: boolean = false;
 
   userform: FormGroup;
   respuesta: Respuesta;
+  terminos: string = "Autorizo de manera voluntaria, previa, explícita, informada e inequívoca a LA UNIVERSIDAD DE LA SALLE, para tratar mis datos personales, con fines académicos relacionados con LA UNIVERSIDAD, acorde con las directrices establecidas en el artículo 10 del Decreto 1377, del 27 de junio de 2013 que reglamenta la Ley 1581 de 2012 sobre Protección de Datos Personales.";
+  verificacionRegistro: string = "null";
+  registroExitoso: boolean = false;
 
   constructor(private service: ServiciosService, private router: Router, private fb: FormBuilder) {
     this.getDepartamentos();
@@ -60,11 +65,13 @@ export class RegistroComponent implements OnInit {
       email: new FormControl("", Validators.required),
       estratoSelected: new FormControl("", Validators.required),
       sexoSelected: new FormControl("", Validators.required),
-      epsSelected: new FormControl("", Validators.required)
+      epsSelected: new FormControl("", Validators.required),
+      hdata: new FormControl("", Validators.required)
     });
   }
 
   registrarse() {
+    this.progress = true;
     let registro = this.makeJson();
     if (!registro) {
       this.userform.invalid;
@@ -80,10 +87,14 @@ export class RegistroComponent implements OnInit {
         },
         () => {
           console.log(this.respuesta);
+          this.display = true;
+          this.progress = false;
           if (this.respuesta.status === "ok") {
-            //Enviar modal para que verifique el registro y redirija
-            console.log("registro terminado");
-            this.router.navigateByUrl("login");
+            this.verificacionRegistro = "¡Registro exitoso!";
+            this.registroExitoso = true;
+          } else {
+            this.verificacionRegistro = "Registro fallido, revise la información suministrada.";
+            this.registroExitoso = false;
           }
         }
       );
@@ -176,7 +187,7 @@ export class RegistroComponent implements OnInit {
         numero_documento: encodeURI(this.userform.value.numeroDocumento),
         departamento_documento: this.userform.value.depDocSelected.codigo,
         ciudad_documento: this.userform.value.ciuDocSelected.codigo,
-        fecha_nacimiento: this.userform.value.fechaNacimiento.getDay() + "/" + this.userform.value.fechaNacimiento.getMonth() + "/" + this.userform.value.fechaNacimiento.getFullYear(),
+        fecha_nacimiento: this.userform.value.fechaNacimiento.getDay() + "/" + (parseInt(this.userform.value.fechaNacimiento.getMonth()) + 1) + "/" + this.userform.value.fechaNacimiento.getFullYear(),
         departamento_nacimiento: this.userform.value.depNacSelected.codigo,
         ciudad_nacimiento: this.userform.value.ciuNacSelected.codigo,
         estado_civil: encodeURI(this.userform.value.tipoEstCivilSelected.codigo),
@@ -195,6 +206,14 @@ export class RegistroComponent implements OnInit {
       return JSON.stringify(jsonReturn);
     } catch (error) {
       return null;
+    }
+  }
+
+  goLogin() {
+    if (this.registroExitoso) {
+      this.router.navigateByUrl("login");
+    } else {
+      this.display = false;
     }
   }
 }
