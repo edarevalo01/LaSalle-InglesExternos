@@ -26,7 +26,7 @@
 }
 
 #cambio {
-  color: rgb(0, 162, 255);
+  color: rgb(40, 113, 189);
 }
 
 #progress {
@@ -42,4 +42,10 @@
   position: fixed;
   top: calc(50% - 75px);
   left: calc(50% - 75px);
+}
+
+.custom-tooltip {
+  background-color: blue;
+  color: black;
+  z-index: 9999999 !important;
 }

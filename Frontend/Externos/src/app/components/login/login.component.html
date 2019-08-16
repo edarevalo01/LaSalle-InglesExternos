@@ -24,9 +24,13 @@
         </div>
       </div>
       <div class="ui-g-12 ui-md-4 ui-md-offset-4" id="div-btn-login">
-        <p-button label="Ingresar" type="button" (click)="login()" id="btn-login"></p-button>
+        <button pButton label="Ingresar" [disabled]="!usuario || !contrasena" type="button" (click)="login()" id="btn-login"></button>
         <br /><br />
-        <!--a id="cambio" (click)="showDialog()">Cambiar contraseña.</a-->
+        <a id="cambio" (click)="showCambio()">Cambiar contraseña.</a><br /><br />
+        <mat-divider></mat-divider>
+        <div>
+          <span><a href="/registro">¿Aún no tienes una cuenta? Crea una.</a></span>
+        </div>
       </div>
     </div>
   </div>
@@ -36,50 +40,69 @@
   <div class="ui-fluid">
     <div class="ui-g" [formGroup]="newPass">
       <div class="ui-g-12 ui-md-12">
-        <div class="ui-g-12 ui-md-12">
-          <div class="ui-inputgroup inputs">
-            <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
-            <input type="text" pInputText placeholder="Usuario" formControlName="cusuario" />
-          </div>
+        <div class="ui-inputgroup inputs">
+          <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <input type="text" pInputText placeholder="Usuario" formControlName="cusuario" />
         </div>
       </div>
       <div class="ui-g-12 ui-md-12">
-        <div class="ui-g-12 ui-md-12">
-          <div class="ui-inputgroup inputs">
-            <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
-            <input type="password" pInputText placeholder="Contraseña Actual" formControlName="passwAct" [type]="hide1 ? 'password' : 'text'" />
-            <button id="icons" mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{ hide1 ? "visibility_off" : "visibility" }}</mat-icon>
-            </button>
-          </div>
+        <div class="ui-inputgroup inputs">
+          <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
+          <input type="password" pInputText placeholder="Contraseña Actual" formControlName="passwAct" [type]="hide1 ? 'password' : 'text'" />
+          <button id="icons" mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide1 ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
         </div>
       </div>
       <div class="ui-g-12 ui-md-12">
-        <div class="ui-g-12 ui-md-12">
-          <div class="ui-inputgroup inputs">
-            <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
-            <input type="password" pInputText placeholder="Nueva Contraseña" formControlName="newPass1" [type]="hide2 ? 'password' : 'text'" />
-            <button id="icons" mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{ hide2 ? "visibility_off" : "visibility" }}</mat-icon>
-            </button>
-          </div>
+        <div class="ui-inputgroup inputs">
+          <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
+          <input type="password" pInputText pTooltip="{{ condicionesPass }}" tooltipPosition="left" tooltipEvent="focus" tooltipZIndex="99999" placeholder="Nueva Contraseña" formControlName="newPass1" [type]="hide2 ? 'password' : 'text'" pattern="(?=.*\d)(?=.*[a-záéíóúüñ]).*[A-ZÁÉÍÓÚÜÑ].*" />
+          <button id="icons" mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide2 ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
         </div>
       </div>
       <div class="ui-g-12 ui-md-12">
-        <div class="ui-g-12 ui-md-12">
-          <div class="ui-inputgroup inputs">
-            <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
-            <input type="password" pInputText placeholder="Confirmar Contraseña" formControlName="newPass2" [type]="hide3 ? 'password' : 'text'" />
-            <button id="icons" mat-icon-button matSuffix (click)="hide3 = !hide3" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-              <mat-icon>{{ hide3 ? "visibility_off" : "visibility" }}</mat-icon>
-            </button>
-          </div>
+        <div class="ui-inputgroup inputs">
+          <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
+          <input type="password" pInputText pTooltip="Las contraseñas deben coincidir." tooltipPosition="left" tooltipEvent="focus" tooltipZIndex="99999" placeholder="Confirmar Contraseña" formControlName="newPass2" [type]="hide3 ? 'password' : 'text'" pattern="(?=.*\d)(?=.*[a-záéíóúüñ]).*[A-ZÁÉÍÓÚÜÑ].*" />
+          <button id="icons" mat-icon-button matSuffix (click)="hide3 = !hide3" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{ hide3 ? "visibility_off" : "visibility" }}</mat-icon>
+          </button>
         </div>
+      </div>
+      <br />
+      <div class="ui-g-12 ui-md-12">
+        <a id="cambio" (click)="showOlvido()">¿Ha olvidado su contraseña?</a>
       </div>
     </div>
   </div>
   <p-footer>
     <button [disabled]="!newPass.valid" type="button" pButton icon="pi pi-check" (click)="change()" label="Cambiar contraseña"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Recuperar Contraseña" [(visible)]="olvido" [blockScroll]="true" [modal]="true" [responsive]="true" [style]="{ width: '400px', minWidth: '200px' }" [minY]="70" [baseZIndex]="10000">
+  <div class="ui-fluid">
+    <div class="ui-g">
+      <div class="ui-g-12 ui-md-12">
+        <div class="ui-inputgroup inputs">
+          <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+          <input type="text" [disabled]="usuarioValidado" pInputText placeholder="Usuario" [(ngModel)]="usuarioCambio" />
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12" *ngIf="usuarioValidado">
+        <span
+          >Su correo electrónico es: <b>{{ correoCambio }}</b
+          >?</span
+        >
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" [disabled]="!usuarioCambio" pButton icon="pi pi-check" (click)="validarUser()" label="{{ confirmar }}"></button>
+    <button *ngIf="usuarioValidado" type="button" pButton icon="pi pi-times" (click)="cancelar()" label="Cancelar" class="ui-button-secondary"></button>
   </p-footer>
 </p-dialog>
 
@@ -89,4 +112,4 @@
   </div>
 </div>
 
-<p-toast position="top-center"></p-toast>
+<p-toast position="top-center" [baseZIndex]="9999"></p-toast>

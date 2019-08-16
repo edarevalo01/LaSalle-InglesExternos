@@ -47,4 +47,14 @@ export class ServiciosService {
       .set("passwordNueva", nuevaPass);
     return this.http.post<Respuesta>(environment.urlChangePassword, body);
   }
+
+  validarUsuario(usuario: string): Observable<Respuesta> {
+    const body = new HttpParams().set("usuario", usuario);
+    return this.http.post<Respuesta>(environment.urlValidarUsuario, body);
+  }
+
+  enviarPassword(usuario: string): Observable<Respuesta> {
+    const body = new HttpParams().set("usuario", usuario);
+    return this.http.post<Respuesta>(environment.urlEnviarPass, body);
+  }
 }

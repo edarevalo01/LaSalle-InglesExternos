@@ -12,6 +12,7 @@ import { RegistroComponent } from "./components/registro/registro.component";
 import { LoginComponent } from "./components/login/login.component";
 
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatDividerModule } from "@angular/material/divider";
 import { MatIconModule } from "@angular/material/icon";
 import { ButtonModule } from "primeng/button";
 import { DropdownModule } from "primeng/dropdown";
@@ -21,10 +22,11 @@ import { CheckboxModule } from "primeng/checkbox";
 import { DialogModule } from "primeng/dialog";
 import { ProgressSpinnerModule } from "primeng/progressspinner";
 import { ToastModule } from "primeng/toast";
+import { TooltipModule } from "primeng/tooltip";
 
 @NgModule({
   declarations: [AppComponent, RegistroComponent, LoginComponent],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ButtonModule, DropdownModule, HttpClientModule, InputTextModule, CalendarModule, NgbModule, BrowserAnimationsModule, MatFormFieldModule, MatIconModule, ReactiveFormsModule, CheckboxModule, DialogModule, ProgressSpinnerModule, ToastModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, BrowserAnimationsModule, ButtonModule, DropdownModule, HttpClientModule, InputTextModule, CalendarModule, NgbModule, BrowserAnimationsModule, MatFormFieldModule, MatIconModule, ReactiveFormsModule, CheckboxModule, DialogModule, ProgressSpinnerModule, ToastModule, TooltipModule, MatDividerModule],
   providers: [CookieService],
   bootstrap: [AppComponent]
 })

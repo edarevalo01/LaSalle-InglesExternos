@@ -5,5 +5,7 @@ export const environment = {
   urlGetDepartamentos: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/getDepartamentos", //idPais
   urlGetCiudades: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/getCiudades", //codigoDepartamento
   urlGetEps: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/getEps",
-  urlChangePassword: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/cambiarPassword"
+  urlChangePassword: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/cambiarPassword",
+  urlValidarUsuario: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/validarUsuario",
+  urlEnviarPass: "http://estctiedarevalo.lasalle.edu.co:8080/ExternosIngles/asignarPassword"
 };
