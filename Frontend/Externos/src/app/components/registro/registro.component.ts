@@ -45,7 +45,7 @@ export class RegistroComponent implements OnInit {
   ngOnInit() {
     this.userform = this.fb.group({
       primerNombre: new FormControl("", Validators.required),
-      segundoNombre: new FormControl("", Validators.required),
+      segundoNombre: new FormControl(""),
       primerApellido: new FormControl("", Validators.required),
       segundoApellido: new FormControl("", Validators.required),
       tipoDocSelected: new FormControl("", Validators.required),
@@ -60,7 +60,7 @@ export class RegistroComponent implements OnInit {
       depResSelected: new FormControl("", Validators.required),
       ciuResSelected: new FormControl("", Validators.required),
       barrio: new FormControl("", Validators.required),
-      telCasa: new FormControl("", Validators.required),
+      telCasa: new FormControl(""),
       telCelular: new FormControl("", Validators.required),
       email: new FormControl("", Validators.required),
       estratoSelected: new FormControl("", Validators.required),
@@ -180,7 +180,7 @@ export class RegistroComponent implements OnInit {
     try {
       const jsonReturn = {
         primer_nombre: this.userform.value.primerNombre,
-        segundo_nombre: this.userform.value.segundoNombre,
+        segundo_nombre: this.userform.value.segundoNombre ? this.userform.value.segundoNombre : " ",
         primer_apellido: this.userform.value.primerApellido,
         segundo_apellido: this.userform.value.segundoApellido,
         tipo_documento: encodeURI(this.userform.value.tipoDocSelected.codigo),
@@ -195,7 +195,7 @@ export class RegistroComponent implements OnInit {
         departamento_residencia: this.userform.value.depResSelected.codigo,
         ciudad_residencia: this.userform.value.ciuResSelected.codigo,
         barrio: this.userform.value.barrio,
-        telefono_casa: encodeURI(this.userform.value.telCasa),
+        telefono_casa: this.userform.value.telCasa ? encodeURI(this.userform.value.telCasa) : "0000000",
         telefono_celular: encodeURI(this.userform.value.telCelular),
         email: this.userform.value.email,
         estrato: encodeURI(this.userform.value.estratoSelected.codigo),

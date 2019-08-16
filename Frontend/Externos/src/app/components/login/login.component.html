@@ -25,7 +25,68 @@
       </div>
       <div class="ui-g-12 ui-md-4 ui-md-offset-4" id="div-btn-login">
         <p-button label="Ingresar" type="button" (click)="login()" id="btn-login"></p-button>
+        <br /><br />
+        <a id="cambio" (click)="showDialog()">Cambiar contraseña.</a>
       </div>
     </div>
   </div>
 </div>
+
+<p-dialog id="mymodal" header="Cambio contraseña" [(visible)]="display" [blockScroll]="true" [modal]="true" [responsive]="true" [style]="{ width: '350px', minWidth: '200px' }" [minY]="70" [baseZIndex]="10000">
+  <div class="ui-fluid">
+    <div class="ui-g" [formGroup]="newPass">
+      <div class="ui-g-12 ui-md-12">
+        <div class="ui-g-12 ui-md-12">
+          <div class="ui-inputgroup inputs">
+            <span class="ui-inputgroup-addon"><i class="pi pi-user"></i></span>
+            <input type="text" pInputText placeholder="Usuario" formControlName="cusuario" />
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12">
+        <div class="ui-g-12 ui-md-12">
+          <div class="ui-inputgroup inputs">
+            <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
+            <input type="password" pInputText placeholder="Contraseña Actual" formControlName="passwAct" [type]="hide1 ? 'password' : 'text'" />
+            <button id="icons" mat-icon-button matSuffix (click)="hide1 = !hide1" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide1 ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12">
+        <div class="ui-g-12 ui-md-12">
+          <div class="ui-inputgroup inputs">
+            <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
+            <input type="password" pInputText placeholder="Nueva Contraseña" formControlName="newPass1" [type]="hide2 ? 'password' : 'text'" />
+            <button id="icons" mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide2 ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="ui-g-12 ui-md-12">
+        <div class="ui-g-12 ui-md-12">
+          <div class="ui-inputgroup inputs">
+            <span class="ui-inputgroup-addon"><i class="pi pi-unlock"></i></span>
+            <input type="password" pInputText placeholder="Confirmar Contraseña" formControlName="newPass2" [type]="hide3 ? 'password' : 'text'" />
+            <button id="icons" mat-icon-button matSuffix (click)="hide3 = !hide3" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <mat-icon>{{ hide3 ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p-footer>
+    <button [disabled]="!newPass.valid" type="button" pButton icon="pi pi-check" (click)="change()" label="Cambiar contraseña"></button>
+  </p-footer>
+</p-dialog>
+
+<div class="ui-g-12 ui-md-12" id="progress" *ngIf="progress">
+  <div id="spinner">
+    <p-progressSpinner [style]="{ width: '150px', height: '150px' }"></p-progressSpinner>
+  </div>
+</div>
+
+<p-toast position="top-center"></p-toast>

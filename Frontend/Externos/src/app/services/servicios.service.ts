@@ -15,12 +15,12 @@ export class ServiciosService {
   registroUsuario(datos: string): Observable<Respuesta> {
     console.log(datos);
     const param = new HttpParams().set("datos", datos);
-    return this.http.get<Respuesta>(environment.urlRegistro, { params: param });
+    return this.http.post<Respuesta>(environment.urlRegistro, param);
   }
 
   loginUsuario(usuario: string, contrasena: string): Observable<Respuesta> {
     const param = new HttpParams().set("usuario", usuario).set("contrasena", contrasena);
-    return this.http.get<Respuesta>(environment.urlLogin, { params: param });
+    return this.http.post<Respuesta>(environment.urlLogin, param);
   }
 
   getDepartamentos(): Observable<any[]> {
@@ -39,5 +39,13 @@ export class ServiciosService {
 
   getEps(): Observable<Eps[]> {
     return this.http.get<Eps[]>(environment.urlGetEps);
+  }
+
+  cambioPassword(usuario: string, viejaPass: string, nuevaPass: string): Observable<Respuesta> {
+    const body = new HttpParams()
+      .set("usuario", usuario)
+      .set("passwordVieja", viejaPass)
+      .set("passwordNueva", nuevaPass);
+    return this.http.post<Respuesta>(environment.urlChangePassword, body);
   }
 }
