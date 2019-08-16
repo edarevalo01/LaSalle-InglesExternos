@@ -86,7 +86,6 @@ export class RegistroComponent implements OnInit {
           console.error("ERROR al registrar: ", error);
         },
         () => {
-          console.log(this.respuesta);
           this.display = true;
           this.progress = false;
           if (this.respuesta.status === "ok") {

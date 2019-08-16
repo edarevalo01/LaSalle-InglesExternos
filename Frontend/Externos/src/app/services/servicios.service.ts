@@ -13,7 +13,6 @@ export class ServiciosService {
   constructor(private http: HttpClient) {}
 
   registroUsuario(datos: string): Observable<Respuesta> {
-    console.log(datos);
     const param = new HttpParams().set("datos", datos);
     return this.http.post<Respuesta>(environment.urlRegistro, param);
   }

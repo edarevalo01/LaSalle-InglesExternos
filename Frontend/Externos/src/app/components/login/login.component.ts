@@ -39,18 +39,20 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.progress = true;
     this.service.loginUsuario(this.usuario, encodeURIComponent(this.contrasena)).subscribe(
       respuestaObs => {
         console.log(respuestaObs);
         this.respuesta = respuestaObs;
       },
       error => {
+        this.progress = false;
         console.error("ERROR al intentar ingresar.");
-        this.messageService.add({ severity: "error", summary: "Error al ingresar al sistema", detail: "Ingrese todos los datos" });
+        this.messageService.add({ severity: "error", summary: "Error al ingresar al sistema", detail: error });
       },
       () => {
+        this.progress = false;
         console.log("Ingreso exitoso.");
-        console.log(this.respuesta);
         if (this.respuesta.status === "ok") {
           this.cookie.set("wUFAnew4", this.respuesta.mensaje, 3600, "/", ".lasalle.edu.co");
           document.location.href = "http://zeus.lasalle.edu.co/oar/clus/?v=1.3";
