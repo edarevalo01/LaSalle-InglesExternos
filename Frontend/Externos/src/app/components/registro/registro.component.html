@@ -140,7 +140,7 @@
         <div class="ui-g-4">
           <span>Email:</span>
         </div>
-        <div class="ui-g-8"><input type="email" formControlName="email" pInputText /></div>
+        <div class="ui-g-8"><input type="email" formControlName="email" pInputText [email]="true" /></div>
       </div>
 
       <div class="ui-g-12 ui-md-6">
@@ -168,7 +168,12 @@
         <p-checkbox [formControl]="userform.controls['hdata']" label="{{ terminos }}"></p-checkbox>
       </div>
       <div class="ui-g-12 ui-md-4 ui-md-offset-4" id="div-btn-registro">
-        <p-button [disabled]="!userform.valid" label="Registrarse" type="button" (click)="registrarse()" id="btn-registro"></p-button>
+        <button pButton [disabled]="!userform.valid" label="Registrarse" type="button" (click)="registrarse()" id="btn-registro"></button>
+        <br /><br />
+        <mat-divider></mat-divider>
+        <div>
+          <span style="margin-left: calc(50% - 40px);"><a href="/login">Inciar sesión</a></span>
+        </div>
       </div>
     </div>
   </div>
