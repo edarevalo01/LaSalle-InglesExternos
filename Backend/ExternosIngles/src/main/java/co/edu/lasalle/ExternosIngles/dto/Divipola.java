@@ -1,0 +1,28 @@
+package co.edu.lasalle.ExternosIngles.dto;
+/**
+ * @author edarevalo
+ * Date: 14/08/19
+ */
+public class Divipola {
+	
+	private String codigo;
+	
+	private String nombre;
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+}
