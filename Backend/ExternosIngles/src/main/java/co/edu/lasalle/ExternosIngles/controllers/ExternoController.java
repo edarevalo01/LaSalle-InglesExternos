@@ -27,13 +27,13 @@ import co.edu.unisalle.cti.sgaexternos.service.UsuarioExternoSalle;
 @CrossOrigin(origins="http://estctiedarevalo.lasalle.edu.co:4200", maxAge = 1)
 @RestController
 public class ExternoController {
-	
+
 	private ExternosHelper externosHelper = ExternosHelper.getInstance(186); 
 	private AuthHelper autenticacion = AuthHelper.getInstance(186);
 	private LaSalleProperties properties;
 	private final Logger LOG = Logger.getLogger(ExternoController.class);
 	private final String IDAPLICACION = "10010";
-	
+
 	/**
 	 * 
 	 * @param documento
@@ -52,9 +52,9 @@ public class ExternoController {
 			LOG.error("ERROR: ", e);
 			return new Mensaje("fail", "Excepción", e.toString());
 		}
-		
+
 	}
-	
+
 	/**
 	 * 
 	 * @param usuario
@@ -82,7 +82,7 @@ public class ExternoController {
 			return new Mensaje("fail", "Excepción", e.toString());
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param usuario
@@ -105,7 +105,7 @@ public class ExternoController {
 			return new Mensaje("fail", "Excepción", e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param usuario
@@ -119,8 +119,8 @@ public class ExternoController {
 				return new Mensaje("fail", "ERROR inesperado", null);
 			}
 			try {
-				properties = LaSalleProperties.getInstance("application.properties");
-				MailHelper.sendMail(properties.getPropertie("mail.asunto.cambiopass"), 
+				this.properties = LaSalleProperties.getInstance("application.properties");
+				MailHelper.sendMail(this.properties.getPropertie("mail.asunto.cambiopass"), 
 						MailTemplatesHelper.getMessageText(properties.getPropertie("mail.tmpl.newpass"), 
 								usr.getUsuario(), 
 								usr.getPassword()),

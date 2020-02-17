@@ -44,13 +44,13 @@ import co.edu.unisalle.cti.sgaexternos.service.UsuarioExternoSalle;
 @CrossOrigin(origins="http://estctiedarevalo.lasalle.edu.co:4200", maxAge = 1)
 @RestController
 public class FormularioController {
-	
+
 	private ExternosHelper externosHelper = ExternosHelper.getInstance(186); 
 	private AuthHelper autenticacion = AuthHelper.getInstance(186);
 	private LaSalleProperties properties;
 	private final Logger LOG = Logger.getLogger(FormularioController.class);
 	private final String IDAPLICACION = "10010";
-	
+
 	/**
 	 * 
 	 * @param usuario
@@ -67,30 +67,30 @@ public class FormularioController {
 			if(usrLogin == null) {
 				return new Mensaje("fail", "Usuario o contraseña inválidos.", "Usuario o contraseña inválidos.");
 			}
+			this.properties = LaSalleProperties.getInstance("application.properties");
 			RestTemplate restTemplate = new RestTemplate();
 			Gson gson = new GsonBuilder().create();
-			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl("http://pruebasia.lasalle.edu.co/pls/pruebasoar/PKG_IDIOMAS_EXTERNOS.get_codigo").queryParam("num_documento", usrLogin.getNumDoc());
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(this.properties.getPropertie("base.url") + "PKG_IDIOMAS_EXTERNOS.get_codigo").queryParam("num_documento", usrLogin.getNumDoc());
 			String responsePL = restTemplate.getForEntity(uriBuilder.build().toUri(), String.class).getBody();			
 			Mensaje jsonMensaje = gson.fromJson(responsePL, Mensaje.class);
-			
-			properties = LaSalleProperties.getInstance("application.properties");
+
 			String usrToken = "ZZZZ;ZZZZ;" + jsonMensaje.getMensaje() + ";" +usrLogin.getPriNombre() + ";" + usrLogin.getNumDoc();
 			String token = CriptoHelper.crearToken(usrToken, properties.getPropertie("des.key"));
-			
+
 			Cookie cookie = new Cookie(this.properties.getPropertie("cookie.name"), token);
 			cookie.setMaxAge(3600);
 			cookie.setPath("/");
 			cookie.setDomain("lasalle.edu.co");
 			cookie.setHttpOnly(true);
 			response.addCookie(cookie); 
-			
+
 			return new Mensaje("ok", token, "no-error", usrLogin);
 		} catch (LaSalleException e) {
 			e.printStackTrace();
 			return new Mensaje("fail", "Usuario o contraseña inválidos.", e.getMessage());
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param datos - Json de datos de usuario
@@ -101,29 +101,30 @@ public class FormularioController {
 		try {
 			Gson gson = new GsonBuilder().create();
 			FormularioExt datosForm = gson.fromJson(datos, FormularioExt.class);
-			
+
+			this.properties = LaSalleProperties.getInstance("application.properties");
 			RestTemplate restTemplate = new RestTemplate();
-			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl("http://pruebasia.lasalle.edu.co/pls/pruebasoar/PKG_IDIOMAS_EXTERNOS.inscripcion_externos").queryParam("json_datos", datos);
+			UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(this.properties.getPropertie("base.url") + "PKG_IDIOMAS_EXTERNOS.inscripcion_externos").queryParam("json_datos", datos);
 			String responsePL = restTemplate.getForEntity(uriBuilder.build().toUri(), String.class).getBody();			
-			
+
 			Mensaje jsonMensaje = gson.fromJson(responsePL, Mensaje.class);
 			String statusPL = jsonMensaje.getStatus();
-			
+
 			if(statusPL.equals("fail")) {
 				return jsonMensaje;
 			}
-			
+
 			String username = externosHelper.generadorNombreUsuario(
 					datosForm.getPrimer_nombre().toLowerCase(), 
 					datosForm.getSegundo_nombre().toLowerCase(), 
 					datosForm.getPrimer_apellido().toLowerCase(), 
 					datosForm.getSegundo_apellido().toLowerCase()
 					);
-			
+
 			UsuarioExternoSalle crearExterno = fillDatos(datosForm, username); //wsdl
-			
+
 			if(crearExterno == null) {
-				uriBuilder = UriComponentsBuilder.fromHttpUrl("http://pruebasia.lasalle.edu.co/pls/pruebasoar/PKG_IDIOMAS_EXTERNOS.eliminar_usuario").queryParam("num_documento", datosForm.getNumero_documento());
+				uriBuilder = UriComponentsBuilder.fromHttpUrl(this.properties.getPropertie("base.url") + "PKG_IDIOMAS_EXTERNOS.eliminar_usuario").queryParam("num_documento", datosForm.getNumero_documento());
 				String responseDelPL = restTemplate.getForEntity(uriBuilder.build().toUri(), String.class).getBody();
 				Mensaje jsonMensajeDel = gson.fromJson(responseDelPL, Mensaje.class);
 				String statusDelPL = jsonMensajeDel.getStatus();
@@ -132,11 +133,10 @@ public class FormularioController {
 				}
 				return new Mensaje("fail", "El usuario ya existe", "El usuario ya existe");
 			}
-			
+
 			try {
-				properties = LaSalleProperties.getInstance("application.properties");
-				MailHelper.sendMail(properties.getPropertie("mail.asunto.inscripcion"), 
-						MailTemplatesHelper.getMessageText(properties.getPropertie("mail.tmpl.inscripcion"), 
+				MailHelper.sendMail(this.properties.getPropertie("mail.asunto.inscripcion"), 
+						MailTemplatesHelper.getMessageText(this.properties.getPropertie("mail.tmpl.inscripcion"), 
 								crearExterno.getPriNombre(), 
 								crearExterno.getSegNombre(), 
 								crearExterno.getPriApellido(), 
@@ -147,9 +147,9 @@ public class FormularioController {
 			}catch (Exception e) {
 				return new Mensaje("ok", "Usuario creado. Error el enviar el correo.", e.toString(), crearExterno.getPassword());
 			}
-			
+
 			this.registrarHabeasData(datosForm);
-			
+
 			LOG.info(username + " " + crearExterno.getMail() + " " + crearExterno.getPassword());
 			return new Mensaje("ok", jsonMensaje.getMensaje(), jsonMensaje.getError(), crearExterno.getPassword());
 		}
@@ -158,7 +158,7 @@ public class FormularioController {
 			return new Mensaje("fail", "Excepción", e.toString());
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param datos
@@ -177,13 +177,13 @@ public class FormularioController {
 			String td = "";
 			int tipoDoc = Integer.parseInt(datos.getTipo_documento());
 			switch (tipoDoc) {
-				case 1: td = HabeasDataHelper.TIPO_DOCUMENTO_CC; break;
-				case 2: td = HabeasDataHelper.TIPO_DOCUMENTO_CE; break;
-				case 3: td = HabeasDataHelper.TIPO_DOCUMENTO_TI; break;
-				case 4: td = HabeasDataHelper.TIPO_DOCUMENTO_VI; break;
-				case 5: td = HabeasDataHelper.TIPO_DOCUMENTO_PAS; break;
-				case 7: td = HabeasDataHelper.TIPO_DOCUMENTO_RC; break;
-				default: td = HabeasDataHelper.TIPO_DOCUMENTO_CC; break;
+			case 1: td = HabeasDataHelper.TIPO_DOCUMENTO_CC; break;
+			case 2: td = HabeasDataHelper.TIPO_DOCUMENTO_CE; break;
+			case 3: td = HabeasDataHelper.TIPO_DOCUMENTO_TI; break;
+			case 4: td = HabeasDataHelper.TIPO_DOCUMENTO_VI; break;
+			case 5: td = HabeasDataHelper.TIPO_DOCUMENTO_PAS; break;
+			case 7: td = HabeasDataHelper.TIPO_DOCUMENTO_RC; break;
+			default: td = HabeasDataHelper.TIPO_DOCUMENTO_CC; break;
 			}
 			hd.setHdTipoDoc(td);
 			hd.setHdTipoUsuario(HabeasDataHelper.TIPO_USUARIO_ESTUD);
@@ -193,7 +193,7 @@ public class FormularioController {
 			LOG.warn("No se logro registrar el habeas data: " + ex.getMessage(), ex);
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param datosForm
